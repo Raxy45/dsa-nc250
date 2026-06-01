@@ -1,0 +1,30 @@
+class Solution:
+    def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()
+        ans, subset = [], []
+        def dfs(i):
+            nonlocal ans
+            print(i, subset, ans)
+            if i==len(nums):
+                ans.append(subset.copy())
+                return
+                    
+            # for i in range(idx, len(nums)):
+            #     if i>idx and nums[i] == nums[i-1]: continue
+
+            #     subset.append(nums[i])
+            #     dfs(i+1)
+            #     subset.pop()
+            subset.append(nums[i])
+            dfs(i+1)
+
+            subset.pop()
+            while i<len(nums)-1 and nums[i] == nums[i+1]: 
+                # skipping
+                print('skipping', nums[i], i)
+                i+= 1
+                print('end', i)
+            dfs(i+1)
+            print('****')
+        dfs(0)
+        return ans
