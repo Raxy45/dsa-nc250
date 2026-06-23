@@ -1,0 +1,41 @@
+class Solution:
+    def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
+        graph = defaultdict(list)
+        m = [float('inf') for _ in range(n)]
+
+        for src2, dest2, price in flights:
+            graph[src2].append((dest2, price))
+
+
+        q = [(0, -1, src)]
+        cheapest = float('inf')
+        print(graph)
+        print(q)
+        print('Post initial')
+        while q:
+            curr_price, stops_req, node = heapq.heappop(q)
+            print(f'{curr_price = }, {stops_req = }, {node = }')
+            if stops_req>k:
+                print('stops_req>k')
+                continue
+            if node == dst:
+                print('Dest node popped')
+                print(curr_price)
+                return curr_price
+            
+            print('Traversing node', node)
+            for dest_stop, price_to_stop in graph[node]:
+                print('dest_stop', dest_stop, price_to_stop)
+                print('curr dest_stop price', m[dest_stop])
+                updated_price = curr_price + price_to_stop
+                if m[dest_stop] > updated_price:
+                    if (stops_req+1) == k and dest_stop!=dst:
+                        # no point of saving the value, as we already exhausted our stops
+                        # and still haven't even reached destination
+                        continue
+                    m[dest_stop] = updated_price
+                    heapq.heappush(q, (updated_price, stops_req+1, dest_stop))
+            
+            print(q)
+            print('*'*3)
+        return -1
