@@ -1,0 +1,63 @@
+class Node:
+    def __init__(self, data, next=None):
+        self.data = data
+        self.next = next
+
+class MyHashSet:
+
+    def __init__(self):
+        self.key_map = [Node(0) for _ in range(10001)]
+
+    def get_key(self, num):
+        return num%10000
+
+    def add(self, key: int) -> None:
+        index = self.get_key(key)
+        slot = self.key_map[index]
+
+        while slot and slot.next!=None:
+            if slot.data == key:
+                return
+            slot = slot.next
+        
+        # print(slot, key)
+        if slot.data == key:
+            return
+        new_node = Node(key)
+        slot.next = new_node
+        return
+
+    def remove(self, key: int) -> None:
+        index = self.get_key(key)
+        slot = self.key_map[index]
+
+        while slot and slot.next and slot.next.data!=key:
+            print(slot.next, slow.next.data, key, 'in?')
+            slot = slot.next
+        
+        if not slot:
+            return
+
+        print(slot, slot.data, slot.next, key, 'jj')
+        slot.next = slot.next.next
+        print(slot.next)
+        return
+
+    def contains(self, key: int) -> bool:
+        index = self.get_key(key)
+        slot = self.key_map[index].next
+
+        while slot and slot.data!=key:
+            slot = slot.next
+        
+        if not slot:
+            return False
+        # print(slot, slot.data, key)
+        return True
+
+
+# Your MyHashSet object will be instantiated and called as such:
+# obj = MyHashSet()
+# obj.add(key)
+# obj.remove(key)
+# param_3 = obj.contains(key)

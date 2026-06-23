@@ -1,0 +1,21 @@
+class Solution:
+
+    def encode(self, strs: List[str]) -> str:
+        print(strs, type(strs), len(strs))
+        print(strs.strip(), type(strs.strip()), len(strs.strip()))
+        if len(strs) == 0:
+            return ''
+        if len(strs) == 1:
+            return strs[0]
+        print(' '.join(strs))
+        return ' '.join(strs)
+        # return 'yash'
+
+    def decode(self, s: str) -> List[str]:
+        print('decode', s, 'yash')
+        print(len(s))
+        if len(s) == 0:
+            return []
+        if ' ' not in s:
+            return []
+        return s.split(' ')
