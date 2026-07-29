@@ -4,12 +4,14 @@ class Solution:
         target = (stoneSum) // 2
         dp = {}
 
+        # Solution present in book
+
         def dfs(i, total):
             if (i, total) in dp:
                 return dp[(i, total)]
             
             if total>=target or i==len(stones):
-                return abs(total - (stoneSum-total))
+                return abs(stoneSum-2*total)
             
             dp[(i, total)] = min(dfs(i+1, total), dfs(i+1, total+stones[i]))
             return dp[(i, total)]
